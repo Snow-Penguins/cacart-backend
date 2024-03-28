@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class ProductsController {
   @Get()
   findAll() {
-    return 'this is test controller';
+    return JSON.stringify('this is test controller');
   }
 }
