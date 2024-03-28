@@ -13,23 +13,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model product {
-  id        Int    @id @default(autoincrement())
-  category_id  Int
-  name      String @unique
-  description String  
-  product_image  String[]
-  category product_category @relation(fields: [category_id], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  @@map("product")
+model Product {
+  id            Int             @id @default(autoincrement())
+  category_id   Int
+  name          String          @unique
+  description   String
+  product_image String[]
+  category      ProductCategory @relation(fields: [category_id], references: [id])
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+
+  @@map("products")
 }
 
-model product_category {
-  id   Int      @id @default(autoincrement())
-  name String   @unique
-  product product[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model ProductCategory {
+  id         Int       @id @default(autoincrement())
+  option_id  Int
+  name       String    @unique
+  products   Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  options    Option[]
+
+  @@map("product_categories")
 }
 
+model ProductItem {
+  id             Int             @id @default(autoincrement())
+  product_id     Int
+  SKU            String          @db.VarChar(50)
+  qty_in_stock   Int
+  qty_sold       Int
+  price          Decimal         @db.Decimal(10, 2)
+  productOptions ProductOption[]
+
+  @@map("product_items")
+}
+
+model OptionValue {
+  id            Int             @id @default(autoincrement())
+  option_id     Int
+  value         String          @db.VarChar(50)
+  qty_by_option Int
+  productItems  ProductOption[]
+
+  @@map("option_values")
+}
+
+model ProductOption {
+  product_id   Int
+  option_id    Int
+  product_item ProductItem @relation(fields: [product_id], references: [id])
+  option_value OptionValue @relation(fields: [option_id], references: [id])
+
+  @@id([product_id, option_id])
+  @@map("product_options")
+}
+
+model Option {
+  id          Int             @id @default(autoincrement())
+  category_id Int
+  option_name String          @db.VarChar(50)
+  category    ProductCategory @relation(fields: [category_id], references: [id])
+
+  @@map("options")
+}
