@@ -20,6 +20,7 @@ model Product {
   description   String
   product_image String[]
   category      ProductCategory @relation(fields: [category_id], references: [id])
+  product_items ProductItem[]
   created_at    DateTime        @default(now())
   updated_at    DateTime        @updatedAt
 
@@ -38,43 +39,46 @@ model ProductCategory {
   @@map("product_categories")
 }
 
+model Option {
+  id            Int             @id @default(autoincrement())
+  category_id   Int
+  option_name   String          @db.VarChar(50)
+  category      ProductCategory @relation(fields: [category_id], references: [id])
+  option_values OptionValue[]
+
+  @@map("options")
+}
+
 model ProductItem {
-  id             Int             @id @default(autoincrement())
-  product_id     Int
-  SKU            String          @db.VarChar(50)
-  qty_in_stock   Int
-  qty_sold       Int
-  price          Decimal         @db.Decimal(10, 2)
-  productOptions ProductOption[]
+  id            Int                      @id @default(autoincrement())
+  product_id    Int
+  SKU           String                   @db.VarChar(50)
+  qty_in_stock  Int
+  qty_sold      Int
+  price         Decimal                  @db.Decimal(10, 2)
+  product       Product                  @relation(fields: [product_id], references: [id])
+  option_values ProductItemOptionValue[]
 
   @@map("product_items")
 }
 
 model OptionValue {
-  id            Int             @id @default(autoincrement())
+  id            Int                      @id @default(autoincrement())
   option_id     Int
-  value         String          @db.VarChar(50)
+  value         String                   @db.VarChar(50)
   qty_by_option Int
-  productItems  ProductOption[]
+  options       Option                   @relation(fields: [option_id], references: [id])
+  product_items ProductItemOptionValue[]
 
   @@map("option_values")
 }
 
-model ProductOption {
-  product_id   Int
-  option_id    Int
-  product_item ProductItem @relation(fields: [product_id], references: [id])
-  option_value OptionValue @relation(fields: [option_id], references: [id])
+model ProductItemOptionValue {
+  product_items_id Int
+  option_values_id Int
+  product_item     ProductItem @relation(fields: [product_items_id], references: [id])
+  option_value     OptionValue @relation(fields: [option_values_id], references: [id])
 
-  @@id([product_id, option_id])
-  @@map("product_options")
-}
-
-model Option {
-  id          Int             @id @default(autoincrement())
-  category_id Int
-  option_name String          @db.VarChar(50)
-  category    ProductCategory @relation(fields: [category_id], references: [id])
-
-  @@map("options")
+  @@id([product_items_id, option_values_id])
+  @@map("product_item_option_values")
 }
