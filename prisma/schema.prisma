@@ -29,7 +29,6 @@ model Product {
 
 model ProductCategory {
   id         Int       @id @default(autoincrement())
-  option_id  Int
   name       String    @unique
   products   Product[]
   created_at DateTime  @default(now())
@@ -45,6 +44,8 @@ model Option {
   option_name   String          @db.VarChar(50)
   category      ProductCategory @relation(fields: [category_id], references: [id])
   option_values OptionValue[]
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
 
   @@map("options")
 }
@@ -58,6 +59,8 @@ model ProductItem {
   price         Decimal                  @db.Decimal(10, 2)
   product       Product                  @relation(fields: [product_id], references: [id])
   option_values ProductItemOptionValue[]
+  created_at    DateTime                 @default(now())
+  updated_at    DateTime                 @updatedAt
 
   @@map("product_items")
 }
@@ -69,6 +72,8 @@ model OptionValue {
   qty_by_option Int
   options       Option                   @relation(fields: [option_id], references: [id])
   product_items ProductItemOptionValue[]
+  created_at    DateTime                 @default(now())
+  updated_at    DateTime                 @updatedAt
 
   @@map("option_values")
 }
@@ -78,6 +83,8 @@ model ProductItemOptionValue {
   option_values_id Int
   product_item     ProductItem @relation(fields: [product_items_id], references: [id])
   option_value     OptionValue @relation(fields: [option_values_id], references: [id])
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
 
   @@id([product_items_id, option_values_id])
   @@map("product_item_option_values")
