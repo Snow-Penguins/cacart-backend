@@ -29,6 +29,7 @@ model Product {
 
 model ProductCategory {
   id         Int       @id @default(autoincrement())
+  option_id  Int
   name       String    @unique
   products   Product[]
   created_at DateTime  @default(now())
