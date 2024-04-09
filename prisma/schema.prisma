@@ -13,6 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            Int             @id @default(autoincrement())
+  email_address String          @unique
+  phone_number  String?
+  password      String
+  firstname     String?
+  middlename    String?
+  lastname      String?
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  source_id     Int?
+
+  @@map("users")
+}
+
 model Product {
   id            Int             @id @default(autoincrement())
   category_id   Int
