@@ -25,9 +25,9 @@ module.exports = {
         tabWidth: 2, // 2 spaces
       },
     ],
-    'quotes': ['error', 'single'], // ""=>''
+    quotes: ['error', 'single'], // ""=>''
     'no-empty': 'error', // No empty in bracket
-    'indent': ['error', 2], // 2 spaces
+    indent: ['error', 2], // 2 spaces
     'object-curly-spacing': ['error', 'always'], // space between { },
     'no-multi-spaces': 'error', // Ex) var a =  1 => var a = 1
     'no-unused-vars': 'off', // off in order to use @typescript-eslint/no-unused-vars
@@ -37,6 +37,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { 'varsIgnorePattern': '^_use', 'argsIgnorePattern': '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_use', argsIgnorePattern: '^_' },
+    ],
   },
 };

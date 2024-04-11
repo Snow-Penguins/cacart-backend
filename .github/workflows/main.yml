@@ -1,0 +1,37 @@
+name: CI/CD Pipeline # Name of the workflow
+
+on:
+  # Triggers the workflow on pull request event for the "main" branch.
+  pull_request:
+    branches: ['main']
+
+  workflow_dispatch:
+
+# Defines the jobs to be run
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2 # Chekcs-out the repository under our Github Workspace to allow our jobs to access it.
+
+      - uses: actions/setup-node@v2 # Sets up a Node.js environment for the job.
+        with:
+          node-version: '18'
+
+      # Ensure `package.json` has matching commands under the `run` keys.
+      # Installs dependencies defined in package.json
+      - name: Install dependencies
+        run: yarn install
+
+      # Executes the lint script defined in package.json
+      - name: Run ESLint
+        run: yarn lint
+
+      # Checks all files compliance with Prettier formatting
+      - name: Run Prettier Check
+        run: yarn prettier-check
+
+      # Builds the project to catch build errors, replicate production environment, and ensuring project builds successfully.
+      - name: Build the project
+        run: yarn build
