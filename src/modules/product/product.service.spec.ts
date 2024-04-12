@@ -12,7 +12,7 @@ describe('ProductService', () => {
 
     service = module.get<ProductService>(ProductService);
   });
-  
+
   it.only('should be defined', () => {
     expect(service).toBeDefined();
   });
