@@ -9,3 +9,13 @@ export class CreateUserDto {
   @IsString({ message: 'Password must be a string' })
   password: string;
 }
+
+export class LoginUserDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
