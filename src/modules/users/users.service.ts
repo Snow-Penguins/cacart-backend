@@ -22,16 +22,15 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     } else {
-      return { message: 'SignUp successful' };
+      const newUser = await this.prisma.user.create({
+        data: {
+          email_address: dto.email,
+          password: hashedPassword,
+        },
+      });
+      return newUser;
+      // return { message: 'SignUp successful' };
     }
-
-    const newUser = await this.prisma.user.create({
-      data: {
-        email_address: dto.email,
-        password: hashedPassword,
-      },
-    });
-    return newUser;
   }
 
   async getAllUsers() {
