@@ -15,12 +15,4 @@ export class ProductCategoryService {
       },
     });
   }
-
-  async getOneCategory(id: number) {
-    return this.prisma.productCategory.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
 }
