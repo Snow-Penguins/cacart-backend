@@ -13,8 +13,22 @@ import { UsersService } from '../users/users.service';
 import { UsersModule } from '../users/users.module';
 
 @Module({
-  imports: [PrismaModule, ProductModule],
-  controllers: [AppController],
-  providers: [AppService, ProductService, PrismaService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    PrismaModule,
+    ProductModule,
+    SupabaseModule,
+    UsersModule,
+  ],
+  controllers: [AppController, ProductController],
+  providers: [
+    AppService,
+    ProductService,
+    PrismaService,
+    SupabaseService,
+    UsersService,
+  ],
 })
 export class AppModule {}
