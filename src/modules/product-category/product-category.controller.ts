@@ -7,8 +7,13 @@ export class ProductCategoryController {
     private readonly productCategoryService: ProductCategoryService,
   ) {}
 
+  // try-catch
   @Get()
   getMainCategory() {
-    return this.productCategoryService.getMainCategory();
+    try {
+      return this.productCategoryService.getMainCategory();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
