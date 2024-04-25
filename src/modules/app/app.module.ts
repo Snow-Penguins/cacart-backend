@@ -9,6 +9,8 @@ import { SupabaseModule } from '../supabase/supabase.module';
 import { SupabaseService } from '../supabase/supabase.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductCategoryService } from '../product-category/product-category.service';
+import { ProductCategoryModule } from '../product-category/product-category.module';
 
 @Module({
   imports: [
@@ -17,9 +19,16 @@ import { AppService } from './app.service';
     }),
     PrismaModule,
     ProductModule,
+    ProductCategoryModule,
     SupabaseModule,
   ],
   controllers: [AppController, ProductController],
-  providers: [AppService, ProductService, PrismaService, SupabaseService],
+  providers: [
+    AppService,
+    ProductService,
+    ProductCategoryService,
+    PrismaService,
+    SupabaseService,
+  ],
 })
 export class AppModule {}
