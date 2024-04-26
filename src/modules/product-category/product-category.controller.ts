@@ -7,7 +7,6 @@ export class ProductCategoryController {
     private readonly productCategoryService: ProductCategoryService,
   ) {}
 
-  // try-catch
   @Get()
   getMainCategory() {
     try {

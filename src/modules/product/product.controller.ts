@@ -13,4 +13,13 @@ export class ProductController {
       console.log(error);
     }
   }
+
+  @Get()
+  getAllProductsByDate() {
+    try {
+      return this.productService.getAllProductsByDate();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

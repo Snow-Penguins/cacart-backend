@@ -16,7 +16,9 @@ describe('SupabaseService', () => {
 
   it('should get bucket lists', async () => {
     // Arrange/Act
-    const actual = await service.getProductImageUrls(['Tiny Freshwater Pearl Necklace']);
+    const actual = await service.getProductImageUrls([
+      'Tiny Freshwater Pearl Necklace',
+    ]);
 
     // Assert
     expect(actual.length).toBeGreaterThan(0);
