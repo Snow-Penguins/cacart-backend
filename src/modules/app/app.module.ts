@@ -11,10 +11,26 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersService } from '../users/users.service';
 import { UsersModule } from '../users/users.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, ProductModule],
-  controllers: [AppController],
-  providers: [AppService, ProductService, PrismaService],
+  imports: [
+    PrismaModule,
+    ProductModule,
+    UsersModule,
+    AuthModule,
+    SupabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+  controllers: [AppController, ProductController],
+  providers: [
+    AppService,
+    ProductService,
+    PrismaService,
+    UsersService,
+    SupabaseService,
+  ],
 })
 export class AppModule {}

@@ -4,9 +4,10 @@ import { SupabaseService } from '../supabase/supabase.service';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { SupabaseModule } from '../supabase/supabase.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [SupabaseModule],
+  imports: [SupabaseModule, ConfigModule],
   controllers: [ProductController],
   providers: [ProductService, PrismaService, SupabaseService],
 })
