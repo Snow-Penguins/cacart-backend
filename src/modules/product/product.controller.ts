@@ -14,7 +14,7 @@ export class ProductController {
     }
   }
 
-  @Get()
+  @Get('by-date')
   getAllProductsByDate() {
     try {
       return this.productService.getAllProductsByDate();

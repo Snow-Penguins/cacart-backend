@@ -26,6 +26,9 @@ export class ProductService {
           },
         },
       },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
   }
 }
