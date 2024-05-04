@@ -11,10 +11,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductCategoryModule } from '../product-category/product-category.module';
-import { ProductItemModule } from '../product-item/product-item.module';
 import { ProductCategoryController } from '../product-category/product-category.controller';
-import { ProductItemController } from '../product-item/product-item.controller';
-import { ProductItemService } from '../product-item/product-item.service';
 
 @Module({
   imports: [
@@ -24,20 +21,13 @@ import { ProductItemService } from '../product-item/product-item.service';
     PrismaModule,
     ProductModule,
     ProductCategoryModule,
-    ProductItemModule,
     SupabaseModule,
   ],
-  controllers: [
-    AppController,
-    ProductController,
-    ProductCategoryController,
-    ProductItemController,
-  ],
+  controllers: [AppController, ProductController, ProductCategoryController],
   providers: [
     AppService,
     ProductService,
     ProductCategoryService,
-    ProductItemService,
     PrismaService,
     SupabaseService,
   ],
