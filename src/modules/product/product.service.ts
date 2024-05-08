@@ -6,7 +6,20 @@ export class ProductService {
   constructor(private prisma: PrismaService) {}
 
   async getAllProducts() {
-    return this.prisma.product.findMany();
+    return this.prisma.product.findMany({
+      include: {
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        product_items: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
   }
 
   async getAllProductsByDate() {
