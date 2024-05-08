@@ -11,6 +11,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductCategoryModule } from '../product-category/product-category.module';
+import { ProductCategoryController } from '../product-category/product-category.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { ProductCategoryModule } from '../product-category/product-category.modu
     ProductCategoryModule,
     SupabaseModule,
   ],
-  controllers: [AppController, ProductController],
+  controllers: [AppController, ProductController, ProductCategoryController],
   providers: [
     AppService,
     ProductService,

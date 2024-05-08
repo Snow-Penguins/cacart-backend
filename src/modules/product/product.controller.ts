@@ -22,4 +22,13 @@ export class ProductController {
       console.log(error);
     }
   }
+
+  @Get('sold-qty')
+  getAllProductBySoldQty1() {
+    try {
+      return this.productService.getAllProductsBySoldQty();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
