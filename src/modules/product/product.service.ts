@@ -8,4 +8,27 @@ export class ProductService {
   async getAllProducts() {
     return this.prisma.product.findMany();
   }
+
+  async getAllProductsByDate() {
+    return this.prisma.product.findMany({
+      select: {
+        id: true,
+        name: true,
+        created_at: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        product_items: {
+          select: {
+            price: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
 }
