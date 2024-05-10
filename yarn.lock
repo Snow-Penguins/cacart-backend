@@ -889,6 +889,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@microsoft/tsdoc@npm:^0.14.2":
+  version: 0.14.2
+  resolution: "@microsoft/tsdoc@npm:0.14.2"
+  checksum: 10c0/c018857ad439144559ce34a397a29ace7cf5b24b999b8e3c1b88d878338088b3a453eaac4435beaf2c7eae13c4c0aac81e42f96f0f1d48e8d4eeb438eb3bb82f
+  languageName: node
+  linkType: hard
+
 "@nestjs/cli@npm:^10.0.0":
   version: 10.3.2
   resolution: "@nestjs/cli@npm:10.3.2"
@@ -993,7 +1000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:^2.0.5":
+"@nestjs/mapped-types@npm:2.0.5, @nestjs/mapped-types@npm:^2.0.5":
   version: 2.0.5
   resolution: "@nestjs/mapped-types@npm:2.0.5"
   peerDependencies:
@@ -1038,6 +1045,34 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.2"
   checksum: 10c0/fa264dc1a4366876b47badbc895ee234ccc6de112484aa5ba45a0a03e67f429f73036d4e9108bb21ad1c30fe30652cbe9cc773c00b3a092c5f2a1499895241ca
+  languageName: node
+  linkType: hard
+
+"@nestjs/swagger@npm:^7.3.1":
+  version: 7.3.1
+  resolution: "@nestjs/swagger@npm:7.3.1"
+  dependencies:
+    "@microsoft/tsdoc": "npm:^0.14.2"
+    "@nestjs/mapped-types": "npm:2.0.5"
+    js-yaml: "npm:4.1.0"
+    lodash: "npm:4.17.21"
+    path-to-regexp: "npm:3.2.0"
+    swagger-ui-dist: "npm:5.11.2"
+  peerDependencies:
+    "@fastify/static": ^6.0.0 || ^7.0.0
+    "@nestjs/common": ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^9.0.0 || ^10.0.0
+    class-transformer: "*"
+    class-validator: "*"
+    reflect-metadata: ^0.1.12 || ^0.2.0
+  peerDependenciesMeta:
+    "@fastify/static":
+      optional: true
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+  checksum: 10c0/8e7bbbba55c7d09a44acb54acd6cdee4b4b90f1ebb52835f6cff285204093133bd7f55afdc4825dbae8ef10dbc8e57cde2ccf303a2194fc08e8803e7667d2ae7
   languageName: node
   linkType: hard
 
@@ -2434,6 +2469,7 @@ __metadata:
     "@nestjs/mapped-types": "npm:^2.0.5"
     "@nestjs/platform-express": "npm:^10.0.0"
     "@nestjs/schematics": "npm:^10.0.0"
+    "@nestjs/swagger": "npm:^7.3.1"
     "@nestjs/testing": "npm:^10.0.0"
     "@prisma/client": "npm:^5.11.0"
     "@supabase/supabase-js": "npm:^2.42.0"
@@ -5013,6 +5049,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "js-yaml@npm:4.1.0"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 10c0/184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
+  languageName: node
+  linkType: hard
+
 "js-yaml@npm:^3.13.1":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
@@ -5022,17 +5069,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10c0/6746baaaeac312c4db8e75fa22331d9a04cccb7792d126ed8ce6a0bbcfef0cedaddd0c5098fade53db067c09fe00aa1c957674b4765610a8b06a5a189e46433b
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "js-yaml@npm:4.1.0"
-  dependencies:
-    argparse: "npm:^2.0.1"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10c0/184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
   languageName: node
   linkType: hard
 
@@ -6952,6 +6988,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"swagger-ui-dist@npm:5.11.2":
+  version: 5.11.2
+  resolution: "swagger-ui-dist@npm:5.11.2"
+  checksum: 10c0/017c49258cca2159fb9adc0ee84722b630bc96bc0dacd7955af66b42007374b9f6ad9038c3da7a3539545a017839da46e7c60006f950e1379d8cbf5a1ffa6f71
   languageName: node
   linkType: hard
 
