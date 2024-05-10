@@ -9,7 +9,15 @@ export class ProductService {
     return this.prisma.product.findMany({
       include: {
         category: true,
-        product_items: true,
+        product_items: {
+          include: {
+            order_histories: {
+              include: {
+                user_reviews: true,
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -18,14 +26,27 @@ export class ProductService {
     return this.prisma.product.findUnique({
       where: { id },
       include: {
-        category: true,
+        category: {
+          include: {
+            options: {
+              select: {
+                option_name: true,
+              },
+            },
+          },
+        },
         product_items: {
           include: {
             option_values: {
               include: {
-                option_value: {
-                  select: {
-                    value: true,
+                option_value: true,
+              },
+            },
+            order_histories: {
+              include: {
+                user_reviews: {
+                  include: {
+                    user: true,
                   },
                 },
               },
