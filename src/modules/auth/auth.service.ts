@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from '../users/dto/login.dto';
 import { compare } from 'bcryptjs';
+import { LoginResponse } from 'src/types/LoginResponse';
 
 export interface UserPayload {
   email: string;
@@ -18,7 +19,7 @@ export class AuthService {
     private usersService: UsersService,
   ) {}
 
-  async login(dto: LoginDto): Promise<string> {
+  async login(dto: LoginDto): Promise<LoginResponse> {
     const user = await this.usersService.findUserByEmail(dto.email);
     if (!user || !(await compare(dto.password, user.password))) {
       throw new HttpException(
@@ -26,12 +27,22 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    return this.generateJwtToken(user);
+    const access_token = this.generateJwtToken(user);
+    return {
+      access_token,
+      email_address: user.email,
+      message: 'Login Successful. Welcome!',
+    };
   }
 
-  async loginWithGoogle(payload: UserPayload): Promise<string> {
+  async loginWithGoogle(payload: UserPayload): Promise<LoginResponse> {
     const user = await this.usersService.findOrCreateUserForOAuth(payload);
-    return this.generateJwtToken(user);
+    const access_token = this.generateJwtToken(user);
+    return {
+      access_token,
+      email_address: user.email,
+      message: 'Login Successful. Welcome!',
+    };
   }
 
   private generateJwtToken(user: any): string {
