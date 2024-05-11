@@ -10,6 +10,7 @@ import { seedJewellyRings } from './seedProducts/seedJewellyRings';
 import { seedClothingMens } from './seedProducts/seedClothingMens';
 import { seedClothingWomens } from './seedProducts/seedClothingWomens';
 import { seedClothingWomens_2 } from './seedProducts/seedClothingWomens_2';
+import { seedUsers } from './seedUsers/seedUsers';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +26,7 @@ async function main() {
   await seedBabyBedding();
   await seedBabyCare();
   await seedBabyClothing();
+  await seedUsers();
 }
 
 main()

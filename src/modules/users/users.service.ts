@@ -1,12 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateUserDto, LoginUserDto } from './dto/user.dto';
-import { hash, compare } from 'bcryptjs';
+import { CreateUserDto } from './dto/user.dto';
+import { hash } from 'bcryptjs';
 import { UserPayload } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+
+  async findUserByEmail(email: string): Promise<any> {
+    return this.prisma.user.findUnique({
+      where: {
+        email_address: email,
+      },
+    });
+  }
 
   async createUser(dto: CreateUserDto) {
     const hashedPassword = await hash(dto.password, 10);
@@ -34,7 +42,7 @@ export class UsersService {
     }
   }
 
-  async findOrCreateUserByEmail(payload: UserPayload): Promise<any> {
+  async registerNewUser(payload: UserPayload): Promise<any> {
     const existingUser = await this.prisma.user.findUnique({
       where: {
         email_address: payload.email,
@@ -56,24 +64,28 @@ export class UsersService {
     }
   }
 
-  async getAllUsers() {
-    return this.prisma.user.findMany();
-  }
-
-  async validateUser(dto: LoginUserDto): Promise<any> {
-    const user = await this.prisma.user.findUnique({
+  async findOrCreateUserForOAuth(payload: UserPayload): Promise<any> {
+    let user = await this.prisma.user.findUnique({
       where: {
-        email_address: dto.email,
+        email_address: payload.email,
       },
     });
 
-    if (!user || !(await compare(dto.password, user.password))) {
-      throw new HttpException(
-        'Invalid email or password.',
-        HttpStatus.UNAUTHORIZED,
-      );
-    } else {
-      return { message: 'Login successful' };
+    if (!user) {
+      user = await this.prisma.user.create({
+        data: {
+          email_address: payload.email,
+          firstname: payload.firstname,
+          middlename: payload.middlename,
+          lastname: payload.lastname,
+        },
+      });
     }
+
+    return user;
+  }
+
+  async getAllUsers() {
+    return this.prisma.user.findMany();
   }
 }
