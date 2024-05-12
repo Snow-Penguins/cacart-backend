@@ -11,7 +11,7 @@ import { UsersModule } from '../users/users.module';
     PassportModule.register({ defaultStrategy: 'google' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '600s' },
     }),
     forwardRef(() => UsersModule),
   ],

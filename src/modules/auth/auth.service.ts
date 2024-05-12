@@ -20,7 +20,11 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto): Promise<LoginResponse> {
+    console.log('Login attempt: ', dto.email);
+
     const user = await this.usersService.findUserByEmail(dto.email);
+    console.log('User detail: ', user);
+
     if (!user || !(await compare(dto.password, user.password))) {
       throw new HttpException(
         'Invalid email or password',
@@ -28,9 +32,10 @@ export class AuthService {
       );
     }
     const access_token = this.generateJwtToken(user);
+    console.log(access_token);
     return {
       access_token,
-      email_address: user.email,
+      email_address: user.email_address,
       message: 'Login Successful. Welcome!',
     };
   }
@@ -40,19 +45,20 @@ export class AuthService {
     const access_token = this.generateJwtToken(user);
     return {
       access_token,
-      email_address: user.email,
+      email_address: user.email_address,
       message: 'Login Successful. Welcome!',
     };
   }
 
   private generateJwtToken(user: any): string {
     const payload = {
-      email_address: user.email,
+      email_address: user.email_address,
       firstname: user.firstname,
       middlename: user.middlename,
       lastname: user.lastname,
     };
-
+    console.log('User data for JWT: ', user);
+    console.log('Payload for JWT: ', payload);
     return this.jwtService.sign(payload);
   }
 }
