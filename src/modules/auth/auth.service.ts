@@ -1,9 +1,15 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from '../users/dto/login.dto';
 import { compare } from 'bcryptjs';
 import { LoginResponse } from 'src/types/LoginResponse';
+import { ConfigService } from '@nestjs/config';
 
 export interface UserPayload {
   email: string;
@@ -17,6 +23,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService,
+    private configService: ConfigService,
   ) {}
 
   async login(dto: LoginDto): Promise<LoginResponse> {
@@ -60,5 +67,27 @@ export class AuthService {
     console.log('User data for JWT: ', user);
     console.log('Payload for JWT: ', payload);
     return this.jwtService.sign(payload);
+  }
+
+  async refreshToken(token: string): Promise<LoginResponse> {
+    try {
+      const payload = this.jwtService.verify(token, {
+        secret: this.configService.get('JWT_SECRET'),
+      });
+      const user = await this.usersService.findUserByEmail(
+        payload.email_address,
+      );
+      if (!user) {
+        throw new UnauthorizedException('Invalid token');
+      }
+      const newToken = this.generateJwtToken(user);
+      return {
+        access_token: newToken,
+        email_address: user.email_address,
+        message: 'Token refreshed successfully',
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }
