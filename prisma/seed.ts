@@ -10,10 +10,16 @@ import { seedJewellyRings } from './seedProducts/seedJewellyRings';
 import { seedClothingMens } from './seedProducts/seedClothingMens';
 import { seedClothingWomens } from './seedProducts/seedClothingWomens';
 import { seedClothingWomens_2 } from './seedProducts/seedClothingWomens_2';
+import { seedUsers } from './seedUser/seedUsers';
+import { seedOrderHistory } from './seedUser/seedOrderHistory';
+import { seedUserReviews } from './seedUser/seedUserReviews';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  await seedUsers();
+  await seedOrderHistory();
+  await seedUserReviews();
   await seedCategories();
   await seedJewellyNecklaces();
   await seedJewellyRings();
