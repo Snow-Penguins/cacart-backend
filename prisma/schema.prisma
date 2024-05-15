@@ -90,3 +90,18 @@ model ProductItemOptionValue {
   @@id([product_items_id, option_values_id])
   @@map("product_item_option_values")
 }
+
+model ShippingMethod {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(25)
+  price Decimal @db.Decimal(10, 2)
+
+  @@map("shipping_methods")
+}
+
+model OrderStatus {
+  id     Int    @id @default(autoincrement())
+  status String @db.VarChar(50)
+
+  @@map("order_status")
+}
