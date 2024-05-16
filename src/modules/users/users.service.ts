@@ -75,9 +75,9 @@ export class UsersService {
       user = await this.prisma.user.create({
         data: {
           email_address: payload.email,
-          firstname: payload.firstname,
-          middlename: payload.middlename,
-          lastname: payload.lastname,
+          first_name: payload.firstname,
+          middle_name: payload.middlename,
+          last_name: payload.lastname,
         },
       });
     }
