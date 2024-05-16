@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -19,9 +19,9 @@ model User {
   email_address String          @unique
   phone_number  String?
   password      String?
-  firstname     String?
-  middlename    String?
-  lastname      String?
+  first_name     String?
+  middle_name    String?
+  last_name      String?
   created_at    DateTime        @default(now())
   updated_at    DateTime        @updatedAt
   source_id     Int?

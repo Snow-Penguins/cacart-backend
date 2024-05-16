@@ -1012,7 +1012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:^2.0.5":
+"@nestjs/mapped-types@npm:2.0.5, @nestjs/mapped-types@npm:^2.0.5":
   version: 2.0.5
   resolution: "@nestjs/mapped-types@npm:2.0.5"
   peerDependencies:
