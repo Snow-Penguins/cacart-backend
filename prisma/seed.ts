@@ -11,6 +11,8 @@ import { PrismaClient } from '@prisma/client';
 // import { seedClothingWomens } from './seedProducts/seedClothingWomens';
 // import { seedClothingWomens_2 } from './seedProducts/seedClothingWomens_2';
 import { seedUpdatePhoto } from './seedProducts/seedUpdatePhoto';
+import { seedShippingMethods } from './seedOrders/seedShippingMethods';
+import { seedOrderStatus } from './seedOrders/seedOrderStatus';
 
 const prisma = new PrismaClient();
 
@@ -27,6 +29,8 @@ async function main() {
   // await seedBabyCare();
   // await seedBabyClothing();
   await seedUpdatePhoto();
+  await seedShippingMethods();
+  await seedOrderStatus();
 }
 
 main()
