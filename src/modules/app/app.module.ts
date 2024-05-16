@@ -12,11 +12,15 @@ import { AppService } from './app.service';
 import { UsersService } from '../users/users.service';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
+import { ProductCategoryService } from '../product-category/product-category.service';
+import { ProductCategoryModule } from '../product-category/product-category.module';
+import { ProductCategoryController } from '../product-category/product-category.controller';
 
 @Module({
   imports: [
     PrismaModule,
     ProductModule,
+    ProductCategoryModule,
     UsersModule,
     AuthModule,
     SupabaseModule,
@@ -24,13 +28,14 @@ import { AuthModule } from '../auth/auth.module';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, ProductController],
+  controllers: [AppController, ProductController, ProductCategoryController],
   providers: [
     AppService,
     ProductService,
     PrismaService,
     UsersService,
     SupabaseService,
+    ProductCategoryService,
   ],
 })
 export class AppModule {}
