@@ -9,27 +9,33 @@ import { SupabaseModule } from '../supabase/supabase.module';
 import { SupabaseService } from '../supabase/supabase.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersService } from '../users/users.service';
+import { UsersModule } from '../users/users.module';
+import { AuthModule } from '../auth/auth.module';
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductCategoryModule } from '../product-category/product-category.module';
 import { ProductCategoryController } from '../product-category/product-category.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
     PrismaModule,
     ProductModule,
     ProductCategoryModule,
+    UsersModule,
+    AuthModule,
     SupabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController, ProductController, ProductCategoryController],
   providers: [
     AppService,
     ProductService,
-    ProductCategoryService,
     PrismaService,
+    UsersService,
     SupabaseService,
+    ProductCategoryService,
   ],
 })
 export class AppModule {}

@@ -7,7 +7,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
   const config = new DocumentBuilder()
     .setTitle('CaCart API Server')
