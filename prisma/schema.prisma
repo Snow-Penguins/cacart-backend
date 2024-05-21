@@ -15,16 +15,18 @@ datasource db {
 }
 
 model User {
-  id            Int             @id @default(autoincrement())
-  email_address String          @unique
+  id            Int           @id @default(autoincrement())
+  email_address String        @unique
   phone_number  String?
   password      String?
-  first_name     String?
-  middle_name    String?
-  last_name      String?
-  created_at    DateTime        @default(now())
-  updated_at    DateTime        @updatedAt
+  first_name    String?
+  middle_name   String?
+  last_name     String?
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
   source_id     Int?
+  cart          Cart[]
+  user_address  UserAddress[]
 
   @@map("users")
 }
@@ -78,6 +80,7 @@ model ProductItem {
   option_values ProductItemOptionValue[]
   created_at    DateTime                 @default(now())
   updated_at    DateTime                 @updatedAt
+  cart_item     CartItem[]
 
   @@map("product_items")
 }
@@ -120,4 +123,50 @@ model OrderStatus {
   status String @db.VarChar(50)
 
   @@map("order_status")
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  user_id   Int
+  user      User       @relation(fields: [user_id], references: [id])
+  cart_item CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id              Int         @id @default(autoincrement())
+  cart_id         Int
+  product_item_id Int
+  qty             Int
+  cart            Cart        @relation(fields: [cart_id], references: [id])
+  product_item    ProductItem @relation(fields: [product_item_id], references: [id])
+
+  @@map("carts_items")
+}
+
+model Address {
+  id            Int           @id @default(autoincrement())
+  unit_number   String?       @db.VarChar(25)
+  address_line1 String        @db.VarChar(50)
+  address_line2 String?       @db.VarChar(50)
+  city          String        @db.VarChar(25)
+  province      String        @db.Char(2)
+  postal_code   String        @db.VarChar(6)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  user_address  UserAddress[]
+
+  @@map("addresses")
+}
+
+model UserAddress {
+  user_id    Int
+  address_id Int
+  is_default Boolean @db.Boolean
+  user       User    @relation(fields: [user_id], references: [id])
+  address    Address @relation(fields: [address_id], references: [id])
+
+  @@id([user_id, address_id])
+  @@map("user_addresses")
 }

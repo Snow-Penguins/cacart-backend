@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "product_categories" ADD COLUMN     "option_id" INTEGER NOT NULL;
+-- ALTER TABLE "product_categories" ADD COLUMN     "option_id" INTEGER NOT NULL;
 
 -- CreateTable
 CREATE TABLE "shipping_methods" (
