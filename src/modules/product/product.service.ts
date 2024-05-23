@@ -11,9 +11,18 @@ export class ProductService {
         category: true,
         product_items: {
           include: {
+            option_values: {
+              include: {
+                option_value: true,
+              },
+            },
             order_histories: {
               include: {
-                user_reviews: true,
+                user_reviews: {
+                  include: {
+                    user: true,
+                  },
+                },
               },
             },
           },
@@ -28,11 +37,7 @@ export class ProductService {
       include: {
         category: {
           include: {
-            options: {
-              select: {
-                option_name: true,
-              },
-            },
+            options: true,
           },
         },
         product_items: {
