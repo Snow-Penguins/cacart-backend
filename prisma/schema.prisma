@@ -27,6 +27,7 @@ model User {
   source_id     Int?
   cart          Cart[]
   user_address  UserAddress[]
+  user_reviews  UserReview[]
 
   @@map("users")
 }
@@ -70,16 +71,17 @@ model Option {
 }
 
 model ProductItem {
-  id            Int                      @id @default(autoincrement())
-  product_id    Int
-  SKU           String                   @db.VarChar(50)
-  qty_in_stock  Int
-  qty_sold      Int
-  price         Decimal                  @db.Decimal(10, 2)
-  product       Product                  @relation(fields: [product_id], references: [id])
-  option_values ProductItemOptionValue[]
-  created_at    DateTime                 @default(now())
-  updated_at    DateTime                 @updatedAt
+  id              Int                      @id @default(autoincrement())
+  product_id      Int
+  SKU             String                   @db.VarChar(50)
+  qty_in_stock    Int
+  qty_sold        Int
+  price           Decimal                  @db.Decimal(10, 2)
+  product         Product                  @relation(fields: [product_id], references: [id])
+  option_values   ProductItemOptionValue[]
+  created_at      DateTime                 @default(now())
+  updated_at      DateTime                 @updatedAt
+  order_histories OrderHistory[]
   cart_item     CartItem[]
 
   @@map("product_items")
@@ -108,6 +110,37 @@ model ProductItemOptionValue {
 
   @@id([product_items_id, option_values_id])
   @@map("product_item_option_values")
+}
+
+model OrderHistory {
+  id              Int          @id @default(autoincrement())
+  product_items_id Int
+  shop_order_id   Int?
+  qty             Int
+  price           Decimal      @db.Decimal(10, 2)
+  product_item    ProductItem  @relation(fields: [product_items_id], references: [id])
+  user_reviews    UserReview[]
+
+  @@map("order_history")
+}
+
+model UserReview {
+  id               Int          @id @default(autoincrement())
+  user_id          Int
+  order_history_id Int
+  rating_value     Int
+  comment          String?
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+  review_image1    String?
+  review_image2    String?
+  review_image3    String?
+  review_image4    String?
+  review_image5    String?
+  order_history    OrderHistory @relation(fields: [order_history_id], references: [id])
+  user             User         @relation(fields: [user_id], references: [id])
+
+  @@map("user_reviews")
 }
 
 model ShippingMethod {
@@ -170,3 +203,4 @@ model UserAddress {
   @@id([user_id, address_id])
   @@map("user_addresses")
 }
+
