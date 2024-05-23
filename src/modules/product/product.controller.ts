@@ -23,4 +23,22 @@ export class ProductController {
       console.log(error);
     }
   }
+
+  @Get('by-date')
+  getAllProductsByDate() {
+    try {
+      return this.productService.getAllProductsByDate();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Get('sold-qty')
+  getAllProductBySoldQty1() {
+    try {
+      return this.productService.getAllProductsBySoldQty();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

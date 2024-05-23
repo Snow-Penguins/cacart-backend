@@ -8,7 +8,11 @@ export class ProductService {
   async getAllProducts() {
     return this.prisma.product.findMany({
       include: {
-        category: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
         product_items: {
           include: {
             option_values: {
@@ -60,5 +64,63 @@ export class ProductService {
         },
       },
     });
+  }
+
+  async getAllProductsByDate() {
+    return this.prisma.product.findMany({
+      select: {
+        id: true,
+        name: true,
+        created_at: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        product_items: {
+          select: {
+            price: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
+
+  async getAllProductsBySoldQty() {
+    const products = await this.prisma.product.findMany({
+      select: {
+        id: true,
+        name: true,
+        created_at: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        product_items: {
+          select: {
+            price: true,
+            qty_sold: true,
+          },
+        },
+      },
+    });
+
+    // Compute total quantities sold per product
+    const productsWithTotalSold = products.map((product) => ({
+      ...product,
+      total_sold: product.product_items.reduce(
+        (sum, item) => sum + item.qty_sold,
+        0,
+      ),
+    }));
+
+    // Sort products by total quantities sold in descending order
+    productsWithTotalSold.sort((a, b) => b.total_sold - a.total_sold);
+
+    return productsWithTotalSold;
   }
 }
