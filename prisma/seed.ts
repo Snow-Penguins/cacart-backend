@@ -15,6 +15,8 @@ import { seedUpdatePhoto } from './seedProducts/seedUpdatePhoto';
 import { seedShippingMethods } from './seedOrders/seedShippingMethods';
 import { seedOrderStatus } from './seedOrders/seedOrderStatus';
 import { seedUsers } from './seedUser/seedUsers';
+import { seedAddresses } from './seedUser/seedAddress';
+import { seedShopOrders } from './seedOrders/seedShopOrder';
 import { seedOrderHistory } from './seedUser/seedOrderHistory';
 import { seedUserReviews } from './seedUser/seedUserReviews';
 
@@ -36,6 +38,8 @@ async function main() {
   await seedShippingMethods();
   await seedOrderStatus();
   await seedUsers();
+  await seedAddresses();
+  await seedShopOrders();
   await seedOrderHistory();
   await seedUserReviews();
 }

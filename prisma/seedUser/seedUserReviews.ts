@@ -5,29 +5,29 @@ const prisma = new PrismaClient();
 export async function seedUserReviews() {
   const reviews = [
     {
-      user_id: 1,
+      user_id: 5,
       order_history_id: 1,
       rating: 4,
       comment: 'Loved the product!',
     },
     {
-      user_id: 1,
+      user_id: 6,
       order_history_id: 2,
       rating: 5,
       comment: 'Perfect! Highly recommend.',
     },
     {
-      user_id: 2,
+      user_id: 7,
       order_history_id: 3,
       rating: 3,
       comment: 'Good but expected more.',
     },
-    {
-      user_id: 3,
-      order_history_id: 4,
-      rating: 5,
-      comment: 'Excellent quality!',
-    },
+    // {
+    //   user_id: 3,
+    //   order_history_id: 4,
+    //   rating: 5,
+    //   comment: 'Excellent quality!',
+    // },
   ];
 
   for (const review of reviews) {

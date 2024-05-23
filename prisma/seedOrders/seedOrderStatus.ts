@@ -24,9 +24,9 @@ export async function seedOrderStatus() {
           status,
         },
       });
-      console.log(`User Created: ${newStatus.status}`);
+      console.log(`Order Status Created: ${newStatus.status}`);
     } else {
-      console.log(`User already exists: ${status}`);
+      console.log(`Order Status already exists: ${status}`);
     }
   }
 }
