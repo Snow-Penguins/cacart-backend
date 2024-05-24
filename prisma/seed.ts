@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+
 // import { seedCategories } from './seedProducts/seedCategories';
 // import { seedArtPrints } from './seedProducts/seedArtPrints';
 // import { seedArtPaintings } from './seedProducts/seedArtPaintings';
@@ -11,6 +12,11 @@ import { PrismaClient } from '@prisma/client';
 // import { seedClothingWomens } from './seedProducts/seedClothingWomens';
 // import { seedClothingWomens_2 } from './seedProducts/seedClothingWomens_2';
 import { seedUpdatePhoto } from './seedProducts/seedUpdatePhoto';
+import { seedShippingMethods } from './seedOrders/seedShippingMethods';
+import { seedOrderStatus } from './seedOrders/seedOrderStatus';
+import { seedUsers } from './seedUser/seedUsers';
+import { seedOrderHistory } from './seedUser/seedOrderHistory';
+import { seedUserReviews } from './seedUser/seedUserReviews';
 
 const prisma = new PrismaClient();
 
@@ -27,6 +33,11 @@ async function main() {
   // await seedBabyCare();
   // await seedBabyClothing();
   await seedUpdatePhoto();
+  await seedShippingMethods();
+  await seedOrderStatus();
+  await seedUsers();
+  await seedOrderHistory();
+  await seedUserReviews();
 }
 
 main()

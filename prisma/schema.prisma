@@ -9,9 +9,27 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email_address String        @unique
+  phone_number  String?
+  password      String?
+  first_name    String?
+  middle_name   String?
+  last_name     String?
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  source_id     Int?
+  cart          Cart[]
+  user_address  UserAddress[]
+  user_reviews  UserReview[]
+
+  @@map("users")
 }
 
 model Product {
@@ -53,16 +71,18 @@ model Option {
 }
 
 model ProductItem {
-  id            Int                      @id @default(autoincrement())
-  product_id    Int
-  SKU           String                   @db.VarChar(50)
-  qty_in_stock  Int
-  qty_sold      Int
-  price         Decimal                  @db.Decimal(10, 2)
-  product       Product                  @relation(fields: [product_id], references: [id])
-  option_values ProductItemOptionValue[]
-  created_at    DateTime                 @default(now())
-  updated_at    DateTime                 @updatedAt
+  id              Int                      @id @default(autoincrement())
+  product_id      Int
+  SKU             String                   @db.VarChar(50)
+  qty_in_stock    Int
+  qty_sold        Int
+  price           Decimal                  @db.Decimal(10, 2)
+  product         Product                  @relation(fields: [product_id], references: [id])
+  option_values   ProductItemOptionValue[]
+  created_at      DateTime                 @default(now())
+  updated_at      DateTime                 @updatedAt
+  order_histories OrderHistory[]
+  cart_item     CartItem[]
 
   @@map("product_items")
 }
@@ -91,3 +111,96 @@ model ProductItemOptionValue {
   @@id([product_items_id, option_values_id])
   @@map("product_item_option_values")
 }
+
+model OrderHistory {
+  id              Int          @id @default(autoincrement())
+  product_items_id Int
+  shop_order_id   Int?
+  qty             Int
+  price           Decimal      @db.Decimal(10, 2)
+  product_item    ProductItem  @relation(fields: [product_items_id], references: [id])
+  user_reviews    UserReview[]
+
+  @@map("order_history")
+}
+
+model UserReview {
+  id               Int          @id @default(autoincrement())
+  user_id          Int
+  order_history_id Int
+  rating_value     Int
+  comment          String?
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+  review_image1    String?
+  review_image2    String?
+  review_image3    String?
+  review_image4    String?
+  review_image5    String?
+  order_history    OrderHistory @relation(fields: [order_history_id], references: [id])
+  user             User         @relation(fields: [user_id], references: [id])
+
+  @@map("user_reviews")
+}
+
+model ShippingMethod {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(25)
+  price Decimal @db.Decimal(10, 2)
+
+  @@map("shipping_methods")
+}
+
+model OrderStatus {
+  id     Int    @id @default(autoincrement())
+  status String @db.VarChar(50)
+
+  @@map("order_status")
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  user_id   Int
+  user      User       @relation(fields: [user_id], references: [id])
+  cart_item CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id              Int         @id @default(autoincrement())
+  cart_id         Int
+  product_item_id Int
+  qty             Int
+  cart            Cart        @relation(fields: [cart_id], references: [id])
+  product_item    ProductItem @relation(fields: [product_item_id], references: [id])
+
+  @@map("carts_items")
+}
+
+model Address {
+  id            Int           @id @default(autoincrement())
+  unit_number   String?       @db.VarChar(25)
+  address_line1 String        @db.VarChar(50)
+  address_line2 String?       @db.VarChar(50)
+  city          String        @db.VarChar(25)
+  province      String        @db.Char(2)
+  postal_code   String        @db.VarChar(6)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  user_address  UserAddress[]
+
+  @@map("addresses")
+}
+
+model UserAddress {
+  user_id    Int
+  address_id Int
+  is_default Boolean @db.Boolean
+  user       User    @relation(fields: [user_id], references: [id])
+  address    Address @relation(fields: [address_id], references: [id])
+
+  @@id([user_id, address_id])
+  @@map("user_addresses")
+}
+

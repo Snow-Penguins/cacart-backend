@@ -1,5 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
+import { Param } from '@nestjs/common';
 
 @Controller('products')
 export class ProductController {
@@ -10,6 +11,15 @@ export class ProductController {
     try {
       const option_id = optionId ? parseInt(optionId, 10) : undefined;
       return this.productService.getAllProducts(option_id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Get(':id')
+  getProductById(@Param('id') id: string) {
+    try {
+      return this.productService.getProductById(+id);
     } catch (error) {
       console.log(error);
     }
