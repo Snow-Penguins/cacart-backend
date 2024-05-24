@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Param } from '@nestjs/common';
 
@@ -7,9 +7,10 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  getAllProducts() {
+  getAllProducts(@Query('optionId') optionId?: string) {
     try {
-      return this.productService.getAllProducts();
+      const option_id = optionId ? parseInt(optionId, 10) : undefined;
+      return this.productService.getAllProducts(option_id);
     } catch (error) {
       console.log(error);
     }

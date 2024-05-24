@@ -5,12 +5,17 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ProductService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllProducts() {
+  async getAllProducts(optionId?: number) {
+    const whereCondition = optionId
+      ? { category: { option_id: optionId } }
+      : {};
     return this.prisma.product.findMany({
+      where: whereCondition,
       include: {
         category: {
           select: {
             name: true,
+            option_id: true,
           },
         },
         product_items: {
