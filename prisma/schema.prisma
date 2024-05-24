@@ -15,19 +15,20 @@ datasource db {
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
-  email_address String        @unique
-  phone_number  String?
-  password      String?
-  first_name    String?
-  middle_name   String?
-  last_name     String?
-  created_at    DateTime      @default(now())
-  updated_at    DateTime      @updatedAt
-  source_id     Int?
-  cart          Cart[]
-  user_address  UserAddress[]
-  user_reviews  UserReview[]
+  id             Int           @id @default(autoincrement())
+  email_address  String        @unique
+  phone_number   String?
+  password       String?
+  first_name     String?
+  middle_name    String?
+  last_name      String?
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  source_id      Int?
+  carts          Cart[]
+  user_addresses UserAddress[]
+  user_reviews   UserReview[]
+  shop_orders    ShopOrder[]
 
   @@map("users")
 }
@@ -82,7 +83,7 @@ model ProductItem {
   created_at      DateTime                 @default(now())
   updated_at      DateTime                 @updatedAt
   order_histories OrderHistory[]
-  cart_item     CartItem[]
+  cart_items      CartItem[]
 
   @@map("product_items")
 }
@@ -113,13 +114,14 @@ model ProductItemOptionValue {
 }
 
 model OrderHistory {
-  id              Int          @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   product_items_id Int
-  shop_order_id   Int?
-  qty             Int
-  price           Decimal      @db.Decimal(10, 2)
-  product_item    ProductItem  @relation(fields: [product_items_id], references: [id])
-  user_reviews    UserReview[]
+  shop_order_id    Int
+  qty              Int
+  price            Decimal      @db.Decimal(10, 2)
+  product_item     ProductItem  @relation(fields: [product_items_id], references: [id])
+  shop_order       ShopOrder    @relation(fields: [shop_order_id], references: [id])
+  user_reviews     UserReview[]
 
   @@map("order_history")
 }
@@ -144,25 +146,27 @@ model UserReview {
 }
 
 model ShippingMethod {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(25)
-  price Decimal @db.Decimal(10, 2)
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(25)
+  price       Decimal     @db.Decimal(10, 2)
+  shop_orders ShopOrder[]
 
   @@map("shipping_methods")
 }
 
 model OrderStatus {
-  id     Int    @id @default(autoincrement())
-  status String @db.VarChar(50)
+  id          Int         @id @default(autoincrement())
+  status      String      @db.VarChar(50)
+  shop_orders ShopOrder[]
 
   @@map("order_status")
 }
 
 model Cart {
-  id        Int        @id @default(autoincrement())
-  user_id   Int
-  user      User       @relation(fields: [user_id], references: [id])
-  cart_item CartItem[]
+  id         Int        @id @default(autoincrement())
+  user_id    Int
+  user       User       @relation(fields: [user_id], references: [id])
+  cart_items CartItem[]
 
   @@map("carts")
 }
@@ -179,16 +183,17 @@ model CartItem {
 }
 
 model Address {
-  id            Int           @id @default(autoincrement())
-  unit_number   String?       @db.VarChar(25)
-  address_line1 String        @db.VarChar(50)
-  address_line2 String?       @db.VarChar(50)
-  city          String        @db.VarChar(25)
-  province      String        @db.Char(2)
-  postal_code   String        @db.VarChar(6)
-  created_at    DateTime      @default(now())
-  updated_at    DateTime      @updatedAt
-  user_address  UserAddress[]
+  id             Int           @id @default(autoincrement())
+  unit_number    String?       @db.VarChar(25)
+  address_line1  String        @db.VarChar(50)
+  address_line2  String?       @db.VarChar(50)
+  city           String        @db.VarChar(25)
+  province       String        @db.Char(2)
+  postal_code    String        @db.VarChar(6)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  user_addresses UserAddress[]
+  shop_orders    ShopOrder[]
 
   @@map("addresses")
 }
@@ -204,3 +209,19 @@ model UserAddress {
   @@map("user_addresses")
 }
 
+model ShopOrder {
+  id               Int            @id @default(autoincrement())
+  user_id          Int
+  order_date       DateTime       @default(now())
+  address_id       Int
+  method_id        Int
+  order_total      Decimal        @db.Decimal(10, 2)
+  status_id        Int
+  user             User           @relation(fields: [user_id], references: [id])
+  shipping_address Address        @relation(fields: [address_id], references: [id])
+  shipping_method  ShippingMethod @relation(fields: [method_id], references: [id])
+  order_status     OrderStatus    @relation(fields: [status_id], references: [id])
+  order_histories  OrderHistory[]
+
+  @@map("shop_orders")
+}

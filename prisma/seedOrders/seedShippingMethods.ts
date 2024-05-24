@@ -25,9 +25,9 @@ export async function seedShippingMethods() {
       const newMethod = await prisma.shippingMethod.create({
         data: method,
       });
-      console.log(`User Created: ${newMethod.name}`);
+      console.log(`Shipping Method Created: ${newMethod.name}`);
     } else {
-      console.log(`User already exists: ${method.name}`);
+      console.log(`Shipping Method already exists: ${method.name}`);
     }
   }
 }

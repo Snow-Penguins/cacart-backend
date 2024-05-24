@@ -53,7 +53,7 @@ CREATE TABLE "user_reviews" (
 -- );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_address_key" ON "users"("email_address");
+-- CREATE UNIQUE INDEX "users_email_address_key" ON "users"("email_address");
 
 -- AddForeignKey
 ALTER TABLE "order_history" ADD CONSTRAINT "order_history_product_items_id_fkey" FOREIGN KEY ("product_items_id") REFERENCES "product_items"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
