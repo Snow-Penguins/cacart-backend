@@ -15,6 +15,9 @@ import { AuthModule } from '../auth/auth.module';
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductCategoryModule } from '../product-category/product-category.module';
 import { ProductCategoryController } from '../product-category/product-category.controller';
+import { OrderController } from 'src/order/order.controller';
+import { OrderModule } from 'src/order/order.module';
+import { OrderService } from 'src/order/order.service';
 
 @Module({
   imports: [
@@ -24,11 +27,17 @@ import { ProductCategoryController } from '../product-category/product-category.
     UsersModule,
     AuthModule,
     SupabaseModule,
+    OrderModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, ProductController, ProductCategoryController],
+  controllers: [
+    AppController,
+    ProductController,
+    ProductCategoryController,
+    OrderController,
+  ],
   providers: [
     AppService,
     ProductService,
@@ -36,6 +45,7 @@ import { ProductCategoryController } from '../product-category/product-category.
     UsersService,
     SupabaseService,
     ProductCategoryService,
+    OrderService,
   ],
 })
 export class AppModule {}
