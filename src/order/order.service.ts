@@ -16,6 +16,8 @@ export class OrderService {
         user: {
           select: {
             first_name: true,
+            last_name: true,
+            email_address: true,
           },
         },
         shipping_address: true,
