@@ -13,4 +13,13 @@ export class OrderController {
       console.log(error);
     }
   }
+
+  @Get('user/:userId')
+  getOrdersByUserId(@Param('userId') userId: string) {
+    try {
+      return this.orderService.getOrdersByUserId(+userId);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
