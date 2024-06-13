@@ -15,9 +15,9 @@ import { AuthModule } from '../auth/auth.module';
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductCategoryModule } from '../product-category/product-category.module';
 import { ProductCategoryController } from '../product-category/product-category.controller';
-import { OrderController } from 'src/order/order.controller';
-import { OrderModule } from 'src/order/order.module';
-import { OrderService } from 'src/order/order.service';
+import { OrderController } from '../order/order.controller';
+import { OrderModule } from '../order/order.module';
+import { OrderService } from '../order/order.service';
 
 @Module({
   imports: [
