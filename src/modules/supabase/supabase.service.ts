@@ -26,4 +26,21 @@ export class SupabaseService {
       console.log(error);
     }
   }
+
+  public async signInWithGoogle() {
+    try {
+      const supabase = createClient(
+        this.configService.get('SUPABASE_URL'),
+        this.configService.get('SUPABASE_API_KEY'),
+      );
+
+      const { data } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

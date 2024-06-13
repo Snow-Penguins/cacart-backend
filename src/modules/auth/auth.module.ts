@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { SupabaseService } from '../supabase/supabase.service';
 import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './google.strategy';
@@ -24,7 +25,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     forwardRef(() => UsersModule),
     ConfigModule,
   ],
-  providers: [AuthService, GoogleStrategy, JwtStrategy],
+  providers: [AuthService, SupabaseService, GoogleStrategy, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })
