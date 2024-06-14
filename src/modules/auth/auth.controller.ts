@@ -9,16 +9,25 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
+import { SupabaseService } from '../supabase/supabase.service';
 import { Request } from 'express';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private supabaseService: SupabaseService,
+  ) {}
 
   @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() _req: Request) {}
+  async signInWitGoogle() {
+    try {
+      return this.supabaseService.signInWithGoogle();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
