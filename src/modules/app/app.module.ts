@@ -18,9 +18,11 @@ import { ProductCategoryController } from '../product-category/product-category.
 import { OrderController } from '../order/order.controller';
 import { OrderModule } from '../order/order.module';
 import { OrderService } from '../order/order.service';
+import { PaymentModule } from '../payment/payment.module';
 
 @Module({
   imports: [
+    PaymentModule,
     PrismaModule,
     ProductModule,
     ProductCategoryModule,
