@@ -96,4 +96,15 @@ export class UsersService {
       },
     });
   }
+
+  async getUserAddress(userId: number) {
+    return this.prisma.userAddress.findMany({
+      where: {
+        user_id: userId,
+      },
+      include: {
+        address: true,
+      },
+    });
+  }
 }
