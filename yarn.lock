@@ -1599,6 +1599,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:>=8.1.0":
+  version: 20.14.2
+  resolution: "@types/node@npm:20.14.2"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10c0/2d86e5f2227aaa42212e82ea0affe72799111b888ff900916376450b02b09b963ca888b20d9c332d8d2b833ed4781987867a38eaa2e4863fa8439071468b0a6f
+  languageName: node
+  linkType: hard
+
 "@types/oauth@npm:*":
   version: 0.9.4
   resolution: "@types/oauth@npm:0.9.4"
@@ -2639,6 +2648,7 @@ __metadata:
     reflect-metadata: "npm:^0.2.0"
     rxjs: "npm:^7.8.1"
     source-map-support: "npm:^0.5.21"
+    stripe: "npm:^15.11.0"
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.1.0"
     ts-loader: "npm:^9.4.3"
@@ -7234,6 +7244,16 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 10c0/9681a6257b925a7fa0f285851c0e613cc934a50661fa7bb41ca9cbbff89686bb4a0ee366e6ecedc4daafd01e83eee0720111ab294366fe7c185e935475ebcecd
+  languageName: node
+  linkType: hard
+
+"stripe@npm:^15.11.0":
+  version: 15.11.0
+  resolution: "stripe@npm:15.11.0"
+  dependencies:
+    "@types/node": "npm:>=8.1.0"
+    qs: "npm:^6.11.0"
+  checksum: 10c0/bd6653d841a94ee54de3ed11d7e50735b88a4f45778db1c6406b16de12f4c4a41731a3394a7ecf257508cdc12b98653e5863b99069b18c6f57d6646c1cb95641
   languageName: node
   linkType: hard
 

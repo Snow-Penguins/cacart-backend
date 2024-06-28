@@ -11,14 +11,15 @@ import { PrismaClient } from '@prisma/client';
 // import { seedClothingMens } from './seedProducts/seedClothingMens';
 // import { seedClothingWomens } from './seedProducts/seedClothingWomens';
 // import { seedClothingWomens_2 } from './seedProducts/seedClothingWomens_2';
-import { seedUpdatePhoto } from './seedProducts/seedUpdatePhoto';
-import { seedShippingMethods } from './seedOrders/seedShippingMethods';
-import { seedOrderStatus } from './seedOrders/seedOrderStatus';
-import { seedUsers } from './seedUser/seedUsers';
-import { seedAddresses } from './seedUser/seedAddress';
-import { seedShopOrders } from './seedOrders/seedShopOrder';
-import { seedOrderHistory } from './seedUser/seedOrderHistory';
-import { seedUserReviews } from './seedUser/seedUserReviews';
+// import { seedUpdatePhoto } from './seedProducts/seedUpdatePhoto';
+// import { seedShippingMethods } from './seedOrders/seedShippingMethods';
+// import { seedOrderStatus } from './seedOrders/seedOrderStatus';
+// import { seedUsers } from './seedUser/seedUsers';
+// import { seedAddresses } from './seedUser/seedAddress';
+// import { seedShopOrders } from './seedOrders/seedShopOrder';
+// import { seedOrderHistory } from './seedUser/seedOrderHistory';
+// import { seedUserReviews } from './seedUser/seedUserReviews';
+import { seedCarts } from './seedCarts/seedCarts';
 
 const prisma = new PrismaClient();
 
@@ -34,14 +35,15 @@ async function main() {
   // await seedBabyBedding();
   // await seedBabyCare();
   // await seedBabyClothing();
-  await seedUpdatePhoto();
-  await seedShippingMethods();
-  await seedOrderStatus();
-  await seedUsers();
-  await seedAddresses();
-  await seedShopOrders();
-  await seedOrderHistory();
-  await seedUserReviews();
+  // await seedUpdatePhoto();
+  // await seedShippingMethods();
+  // await seedOrderStatus();
+  // await seedUsers();
+  // await seedAddresses();
+  // await seedShopOrders();
+  // await seedOrderHistory();
+  // await seedUserReviews();
+  await seedCarts();
 }
 
 main()
