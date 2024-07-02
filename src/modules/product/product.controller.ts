@@ -16,15 +16,6 @@ export class ProductController {
     }
   }
 
-  @Get(':id')
-  getProductById(@Param('id') id: string) {
-    try {
-      return this.productService.getProductById(+id);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   @Get('by-date')
   getAllProductsByDate() {
     try {
@@ -38,6 +29,15 @@ export class ProductController {
   getAllProductBySoldQty1() {
     try {
       return this.productService.getAllProductsBySoldQty();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Get(':id')
+  getProductById(@Param('id') id: string) {
+    try {
+      return this.productService.getProductById(+id);
     } catch (error) {
       console.log(error);
     }

@@ -76,6 +76,7 @@ export class ProductService {
       select: {
         id: true,
         name: true,
+        product_image: true,
         created_at: true,
         category: {
           select: {
@@ -99,6 +100,7 @@ export class ProductService {
       select: {
         id: true,
         name: true,
+        product_image: true,
         created_at: true,
         category: {
           select: {
