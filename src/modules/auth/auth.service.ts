@@ -44,6 +44,7 @@ export class AuthService {
       access_token,
       email_address: user.email_address,
       message: 'Login Successful. Welcome!',
+      user_id: user.id,
     };
   }
 
@@ -54,6 +55,7 @@ export class AuthService {
       access_token,
       email_address: user.email_address,
       message: 'Login Successful. Welcome!',
+      user_id: user.id,
     };
   }
 
@@ -85,6 +87,7 @@ export class AuthService {
         access_token: newToken,
         email_address: user.email_address,
         message: 'Token refreshed successfully',
+        user_id: user.id,
       };
     } catch (error) {
       throw new UnauthorizedException('Invalid token');
