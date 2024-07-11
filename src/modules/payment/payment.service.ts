@@ -17,7 +17,7 @@ export class PaymentService {
 
   async createPaymentIntent(amount: number, currency: string) {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100,
+      amount: amount,
       currency: currency,
     });
 
