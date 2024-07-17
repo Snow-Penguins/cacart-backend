@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { OrderService } from './order.service';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @Controller('order')
 export class OrderController {
@@ -18,6 +19,15 @@ export class OrderController {
   getOrdersByUserId(@Param('userId') userId: string) {
     try {
       return this.orderService.getOrdersByUserId(+userId);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Post('create')
+  async createOrder(@Body() createOrderDto: CreateOrderDto) {
+    try {
+      return await this.orderService.createOrder(createOrderDto);
     } catch (error) {
       console.log(error);
     }
