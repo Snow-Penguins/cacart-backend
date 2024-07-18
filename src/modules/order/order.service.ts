@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -22,9 +23,7 @@ export class OrderService {
         },
         shipping_address: true,
         order_histories: {
-          select: {
-            qty: true,
-            price: true,
+          include: {
             product_item: {
               include: {
                 product: {
@@ -56,9 +55,7 @@ export class OrderService {
           },
         },
         order_histories: {
-          select: {
-            qty: true,
-            price: true,
+          include: {
             product_item: {
               include: {
                 product: {
@@ -73,5 +70,67 @@ export class OrderService {
         },
       },
     });
+  }
+
+  async createOrder(createOrderDto: CreateOrderDto) {
+    const {
+      userId,
+      totalAmount,
+      shippingAddress,
+      items,
+      shippingMethodId,
+      orderStatusId,
+    } = createOrderDto;
+
+    console.log('Received order data:', createOrderDto);
+
+    const newOrder = await this.prisma.shopOrder.create({
+      data: {
+        user: {
+          connect: { id: userId },
+        },
+        order_total: totalAmount,
+        shipping_method: {
+          connect: { id: shippingMethodId },
+        },
+        order_status: {
+          connect: { id: orderStatusId },
+        },
+        shipping_address: {
+          create: shippingAddress,
+        },
+        order_histories: {
+          create: items.map((item) => ({
+            product_item: {
+              connect: { id: item.productId },
+            },
+            qty: item.quantity,
+            price: item.price,
+          })),
+        },
+      },
+      include: {
+        order_histories: {
+          include: {
+            product_item: {
+              include: {
+                product: {
+                  select: {
+                    name: true,
+                    product_image: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        shipping_address: true,
+        user: true,
+      },
+    });
+
+    console.log('Created new order:', newOrder);
+
+    return newOrder;
   }
 }
