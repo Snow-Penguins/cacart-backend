@@ -38,7 +38,6 @@ export class UsersService {
         },
       });
       return newUser;
-      // return { message: 'SignUp successful' };
     }
   }
 
@@ -94,6 +93,13 @@ export class UsersService {
       where: {
         id: userId,
       },
+      include: {
+        user_addresses: {
+          include: {
+            address: true,
+          },
+        },
+      },
     });
   }
 
@@ -105,6 +111,13 @@ export class UsersService {
       include: {
         address: true,
       },
+    });
+  }
+
+  async updateUser(userId: number, data: Partial<any>): Promise<any> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data,
     });
   }
 }
