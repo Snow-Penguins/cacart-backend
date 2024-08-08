@@ -20,6 +20,7 @@ import { OrderModule } from '../order/order.module';
 import { OrderService } from '../order/order.service';
 import { PaymentModule } from '../payment/payment.module';
 import { CartModule } from '../cart/cart.module';
+import { MailerModule } from '../mailer/mailer.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CartModule } from '../cart/cart.module';
     AuthModule,
     SupabaseModule,
     OrderModule,
+    MailerModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

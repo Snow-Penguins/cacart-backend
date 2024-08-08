@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
+import {
+  Controller,
+  Put,
+  Post,
+  Body,
+  Get,
+  Param,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthService } from '../auth/auth.service';
 import { CreateUserDto, LoginUserDto } from './dto/user.dto';
@@ -17,6 +26,10 @@ export class UsersController {
       return this.usersService.getAllUsers();
     } catch (error) {
       console.log(error);
+      throw new HttpException(
+        'Failed to get users',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -25,8 +38,11 @@ export class UsersController {
     try {
       return await this.usersService.createUser(dto);
     } catch (error) {
-      console.log('Error signing up:', error);
-      throw new Error('Failed to sign up');
+      console.log(error);
+      throw new HttpException(
+        'Failed to sign up',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -35,18 +51,57 @@ export class UsersController {
     try {
       return await this.authService.login(dto);
     } catch (error) {
-      console.log('Error signing in:', error);
-      throw new Error('Failed to sign in');
+      console.log(error);
+      throw new HttpException(
+        'Failed to sign in',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
   @Get('addresses/:userId')
-  getUserAddress(@Param('userId') userId: string) {
-    const userIdInt = parseInt(userId);
+  async getUserAddress(@Param('userId') userId: string) {
+    const userIdInt = parseInt(userId, 10);
+    if (isNaN(userIdInt)) {
+      throw new HttpException('Invalid user ID', HttpStatus.BAD_REQUEST);
+    }
     try {
-      return this.usersService.getUserAddress(userIdInt);
+      return await this.usersService.getUserAddress(userIdInt);
     } catch (error) {
       console.log(error);
+      throw new HttpException(
+        'Failed to get user address',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('request-reset-password')
+  async requestResetPassword(@Body('email') email: string) {
+    try {
+      return this.authService.requestPasswordReset(email);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Failed to request password reset',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('reset-password/:token')
+  async resetPassword(
+    @Param('token') token: string,
+    @Body('password') password: string,
+  ) {
+    try {
+      return this.authService.resetPassword(token, password);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Failed to reset password',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
