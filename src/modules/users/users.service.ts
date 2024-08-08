@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/user.dto';
 import { hash } from 'bcryptjs';
 import { UserPayload } from '../auth/auth.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -114,10 +115,48 @@ export class UsersService {
     });
   }
 
-  async updateUser(userId: number, data: Partial<any>): Promise<any> {
+  async updateUser(userId: number, updateData: any) {
+    console.log('Update user data:', updateData);
     return this.prisma.user.update({
       where: { id: userId },
+      data: updateData,
+    });
+  }
+
+  async updateUserAddress(
+    userId: number,
+    addressId: number,
+    data: Prisma.AddressUpdateInput,
+  ) {
+    const userAddress = await this.prisma.userAddress.findUnique({
+      where: { user_id_address_id: { user_id: userId, address_id: addressId } },
+    });
+
+    if (!userAddress) {
+      throw new Error('Address not found for user');
+    }
+
+    console.log('Update address data:', data);
+    return this.prisma.address.update({
+      where: { id: addressId },
       data,
     });
+  }
+
+  async createUserAddress(userId: number, data: Prisma.AddressCreateInput) {
+    console.log('Create address data:', data);
+    const address = await this.prisma.address.create({
+      data,
+    });
+
+    await this.prisma.userAddress.create({
+      data: {
+        user_id: userId,
+        address_id: address.id,
+        is_default: false,
+      },
+    });
+
+    return address;
   }
 }
