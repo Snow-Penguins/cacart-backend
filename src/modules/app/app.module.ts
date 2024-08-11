@@ -21,9 +21,11 @@ import { OrderService } from '../order/order.service';
 import { PaymentModule } from '../payment/payment.module';
 import { CartModule } from '../cart/cart.module';
 import { MailerModule } from '../mailer/mailer.module';
+import { SearchModule } from '../search/search.module';
 
 @Module({
   imports: [
+    SearchModule,
     CartModule,
     PaymentModule,
     PrismaModule,
