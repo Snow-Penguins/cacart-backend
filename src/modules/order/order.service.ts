@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { UsersService } from 'src/modules/users/users.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-
+import { Prisma } from '@prisma/client';
 @Injectable()
 export class OrderService {
   constructor(
@@ -84,6 +84,20 @@ export class OrderService {
 
     console.log('Received order data:', createOrderDto);
 
+    let addressData:
+      | { connect: { id: number } }
+      | { create: Prisma.AddressCreateInput };
+
+    if (shippingAddress.id) {
+      addressData = {
+        connect: { id: shippingAddress.id },
+      };
+    } else {
+      addressData = {
+        create: shippingAddress,
+      };
+    }
+
     const newOrder = await this.prisma.shopOrder.create({
       data: {
         user: {
@@ -96,9 +110,7 @@ export class OrderService {
         order_status: {
           connect: { id: orderStatusId },
         },
-        shipping_address: {
-          create: shippingAddress,
-        },
+        shipping_address: addressData,
         order_histories: {
           create: items.map((item) => ({
             product_item: {
