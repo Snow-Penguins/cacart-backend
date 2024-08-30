@@ -9,7 +9,7 @@ export class PaymentService {
   async getCartItems(cartId: number) {
     const cartItems = await this.prisma.cartItem.findMany({
       where: { cart_id: cartId },
-      include: { product_item: true },
+      include: { product_item: { include: { product: true } } },
     });
 
     return cartItems;
