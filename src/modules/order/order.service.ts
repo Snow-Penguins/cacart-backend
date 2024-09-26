@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
-import { UsersService } from 'src/modules/users/users.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { UsersService } from '../users/users.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Prisma } from '@prisma/client';
 @Injectable()
@@ -11,7 +11,7 @@ export class OrderService {
   ) {}
 
   async getOrderById(id: number) {
-    return this.prisma.shopOrder.findUnique({
+    const order = await this.prisma.shopOrder.findUnique({
       where: { id },
       include: {
         user: {
@@ -38,6 +38,12 @@ export class OrderService {
         },
       },
     });
+
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    return order;
   }
 
   async getOrdersByUserId(userId: number) {
@@ -81,8 +87,6 @@ export class OrderService {
       shippingMethodId,
       orderStatusId,
     } = createOrderDto;
-
-    console.log('Received order data:', createOrderDto);
 
     let addressData:
       | { connect: { id: number } }
@@ -140,8 +144,6 @@ export class OrderService {
         user: true,
       },
     });
-
-    console.log('Created new order:', newOrder);
 
     return newOrder;
   }

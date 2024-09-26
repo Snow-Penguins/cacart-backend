@@ -1,13 +1,14 @@
+import Decimal from 'decimal.js';
 export class CreateOrderDto {
   userId: number;
-  totalAmount: number;
+  totalAmount: Decimal;
   shippingMethodId: number;
   orderStatusId: number;
   shippingAddress: shippingAddressDto;
   items: {
     productId: number;
     quantity: number;
-    price: number;
+    price: Decimal;
   }[];
 }
 class shippingAddressDto {
