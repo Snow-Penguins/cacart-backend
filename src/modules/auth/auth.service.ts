@@ -105,7 +105,7 @@ export class AuthService {
       { email: user.email_address },
       { expiresIn: '15m' },
     );
-    const resetLink = `http://localhost:3000/auth/reset-password/${token}`;
+    const resetLink = `https://cacart-q48e.vercel.app/auth/reset-password/${token}`;
 
     console.log('Generated reset link:', resetLink);
 
